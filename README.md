@@ -52,7 +52,7 @@ A practical workaround does work for this file:
 1. virtualize the dataset with `station` and `code` dropped via `HDFParser(drop_variables=[...])`
 2. load those two string coordinates normally with `xarray`
 3. reattach them as regular coordinates on the virtual dataset
-4. export kerchunk refs from the mixed dataset with `vds.virtualize.to_kerchunk(...)`
+4. export kerchunk refs from the mixed dataset with `vds.vz.to_kerchunk(...)`
 5. reopen the resulting refs with `xarray(..., engine="kerchunk")`
 
 That produces a usable virtual reference dataset for this sample. The script is in `scripts/workaround.py` and writes:

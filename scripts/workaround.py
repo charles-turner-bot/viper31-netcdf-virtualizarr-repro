@@ -53,7 +53,7 @@ summary["coords_after_reattach"] = list(vds.coords)
 summary["station_dtype_after_reattach"] = str(vds["station"].dtype)
 summary["code_dtype_after_reattach"] = str(vds["code"].dtype)
 
-refs = vds.virtualize.to_kerchunk(format="dict")
+refs = vds.vz.to_kerchunk(format="dict")
 REFS_PATH.write_text(json.dumps(refs, indent=2) + "\n")
 summary["kerchunk_refs_path"] = str(REFS_PATH)
 summary["kerchunk_ref_count"] = len(refs.get("refs", {}))
