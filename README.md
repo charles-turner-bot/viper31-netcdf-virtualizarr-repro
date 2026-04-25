@@ -9,7 +9,8 @@ Small scratch repro for the issue discussed in:
 - downloads the shared sample NetCDF from the Google Drive link in the issue comments
 - inspects it with `xarray`
 - tries `virtualizarr.open_virtual_dataset(...)`
-- writes a JSON summary to `artifacts/summary.json`
+- captures a working workaround that still produces virtual refs via VirtualiZarr
+- writes JSON summaries to `artifacts/summary.json` and `artifacts/workaround-summary.json`
 - generates a simple Jupyter notebook in `notebooks/repro.ipynb`
 
 ## Quick start
@@ -17,6 +18,7 @@ Small scratch repro for the issue discussed in:
 ```bash
 pixi run download
 pixi run repro
+pixi run workaround
 pixi run make-notebook
 ```
 
@@ -42,6 +44,23 @@ AttributeError: 'bytes' object has no attribute 'item'
 ```
 
 This occurs inside VirtualiZarr's HDF parser when it tries to read a fill value for byte-backed string data.
+
+## Workaround found
+
+A practical workaround does work for this file:
+
+1. virtualize the dataset with `station` and `code` dropped via `HDFParser(drop_variables=[...])`
+2. load those two string coordinates normally with `xarray`
+3. reattach them as regular coordinates on the virtual dataset
+4. export kerchunk refs from the mixed dataset with `vds.vz.to_kerchunk(...)`
+5. reopen the resulting refs with `xarray(..., engine="kerchunk")`
+
+That produces a usable virtual reference dataset for this sample. The script is in `scripts/workaround.py` and writes:
+
+- `artifacts/workaround-kerchunk.json`
+- `artifacts/workaround-summary.json`
+
+Interesting extra detail: even after patching the immediate `fillvalue.item()` crash, the raw HDF parser still runs into a second problem because these string variables come through `h5py` as `dtype=object`, which Zarr v3 cannot resolve automatically.
 
 ## Notes
 
