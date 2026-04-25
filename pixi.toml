@@ -23,5 +23,6 @@ fsspec = "==2026.3.0"
 [tasks]
 download = "python scripts/download_sample.py"
 repro = "python scripts/repro.py"
+workaround = "python scripts/workaround.py"
 make-notebook = "python scripts/make_notebook.py"
-all = { depends-on = ["download", "repro", "make-notebook"] }
+all = { depends-on = ["download", "repro", "workaround", "make-notebook"] }
