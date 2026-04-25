@@ -1,0 +1,27 @@
+[workspace]
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+
+[dependencies]
+python = "3.12.*"
+pip = "*"
+jupyterlab = "*"
+ipykernel = "*"
+nbformat = "*"
+requests = "*"
+
+[pypi-dependencies]
+virtualizarr = "==2.6.0"
+xarray = "==2026.2.0"
+kerchunk = "==0.2.10"
+h5netcdf = "==1.8.1"
+h5py = "==3.16.0"
+zarr = "==3.1.6"
+fsspec = "==2026.3.0"
+
+[tasks]
+download = "python scripts/download_sample.py"
+repro = "python scripts/repro.py"
+make-notebook = "python scripts/make_notebook.py"
+all = { depends-on = ["download", "repro", "make-notebook"] }

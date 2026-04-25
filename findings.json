@@ -1,0 +1,16 @@
+{
+  "sample_file": "2022-11_DPIRD_slice.nc",
+  "size_bytes": 162001355,
+  "size_human": "154.5 MiB",
+  "xarray_dims": {
+    "station": 192,
+    "time": 5856
+  },
+  "string_like_coords": [
+    "station",
+    "code"
+  ],
+  "virtualizarr_status": "error",
+  "virtualizarr_error_type": "AttributeError",
+  "virtualizarr_error": "'bytes' object has no attribute 'item'"
+}
